@@ -1,0 +1,72 @@
+/* how we calculate the box content */
+*, *::before, *::after{
+    /* tells the browser to account for any border and padding in the values you specify for an element's width and height. */
+    box-sizing: border-box;
+}
+
+:root{
+    /* var for the size of the cell */
+    --cell-size: 100px;
+    /* var for the size of mark x o */
+    --mark-size: cal(var(--cell-size) * 0.9);
+}
+
+body{
+    margin: 0;
+}
+
+.board{
+    /* background-color: black; */
+    width: 100vw;
+    height: 100vh;
+    /* display contents inside board as grid */
+    display: grid;
+    /* cell are centered according to board */
+    justify-content: center;
+    align-content: center;
+
+    /* items inside grid are centered according grig */
+    justify-items: center;
+    align-items: center;
+    /* equal to: auto auto auto */
+    /* set three columns (we have nine blocks, each column will have three blocks) */
+    /* 
+    1 2 3
+    4 5 6
+    7 8 9
+    */
+    grid-template-columns: repeat(3, auto);
+}
+
+.cell{
+    width: var(--cell-size);
+    height: var(--cell-size);
+    
+    border: 1px solid black;
+}
+
+
+/* remove top boarder */
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3){
+    border-top: none;
+}
+
+/* remove the left boarder */
+/* 1, 4, 7 */
+.cell:nth-child(3n+1){
+    border-left: none;
+}
+/* 3, 6, 9 */
+/* remove the right boarder */
+.cell:nth-child(3n+3){
+    border-right: none;
+}
+
+.cell:nth-child(7),
+.cell:nth-child(8),
+.cell:nth-child(9){
+    border-bottom: none;
+}
+
