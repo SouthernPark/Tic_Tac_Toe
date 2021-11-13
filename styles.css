@@ -8,7 +8,7 @@
     /* var for the size of the cell */
     --cell-size: 100px;
     /* var for the size of mark x o */
-    --mark-size: cal(var(--cell-size) * 0.9);
+    --mark-size: calc(var(--cell-size) * 0.9);
 }
 
 body{
@@ -41,10 +41,19 @@ body{
 .cell{
     width: var(--cell-size);
     height: var(--cell-size);
-    
     border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
 }
 
+.cell.x,
+.cell.circle{
+    cursor: not-allowed;
+
+}
 
 /* remove top boarder */
 .cell:first-child,
@@ -69,4 +78,77 @@ body{
 .cell:nth-child(9){
     border-bottom: none;
 }
+
+/* create the X marker */
+/* firstly get two I */
+.cell.x::before,
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after{
+    content: '';
+    width: calc(var(--mark-size) *.15);
+    height: var(--mark-size);
+    background-color: black;
+    position: absolute;
+}
+
+/* then rotate the two */
+.cell.x::before,
+.board.x .cell:not(.x):not(.circle):hover::before{
+    transform: rotate(45deg);
+}
+
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::after{
+    transform: rotate(-45deg);
+}
+
+/* make a circle class */
+.cell.circle::before,
+.cell.circle::after,
+.board.circle .cell:not(.circle):not(.x):hover::before,
+.board.circle .cell:not(.circle):not(.x):hover::after
+{
+    content: '';
+    border-radius: 50%;
+    position: absolute;
+}
+
+/* bigger circle */
+.cell.circle::before,
+.board.circle .cell:not(.circle):not(.x):hover::before
+{
+    width: var(--mark-size);
+    height: var(--mark-size);
+    background-color: black;
+}
+
+/* smaller circle */
+.cell.circle::after,
+.board.circle .cell:not(.circle):not(.x):hover::after
+{
+    width: calc(var(--mark-size)* 0.7);
+    height: calc(var(--mark-size)* 0.7);
+    background-color: white;
+}
+
+
+/* hover effects */
+/* if it's x turn, then hover x */
+/* if it's o turn, then hover o */
+/* How to decide whose turn? --> .board.x   .board.circle */
+
+/* we hover at the cell if its x's turn */
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after
+{
+    background-color: lightgrey;
+}
+
+
+/* hover effects for circle */
+.board.circle .cell:not(.circle):not(.x):hover::before{
+    background-color: lightgrey;
+}
+
 
